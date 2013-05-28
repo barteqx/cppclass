@@ -12,9 +12,11 @@ public:
 };
 
 class rectangle : public surf {
+
 public:
    double x1, y1;
    double x2, y2;
+
    rectangle(double a, double b, double c, double d)
    : x1(a), y1(b), x2(c), y2(d) {}
 
@@ -28,11 +30,11 @@ public:
 };
 
 class triangle : public surf {
+
 public:
    double x1, y1; // Positions of corners.
    double x2, y2;
    double x3, y3;
-
 
    triangle(double a, double b, double c, double d, double e, double f)
    : x1(a), y1(b), x2(c), y2(d), x3(e), y3(f) {}
@@ -47,10 +49,12 @@ public:
 };
 
 class circle : public surf {
+
 public:
    double x; // Position of center.
    double y;
    double radius;
+
    circle(double a, double b, double r)
    : x(a), y(b), radius(r) {}
 
@@ -64,6 +68,7 @@ public:
 };
 
 struct surface {
+   
    surf* ref;
 
    surface(const surface& s)
