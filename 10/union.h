@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <string>
 
 template<typename A, typename B> class unionof;
 
@@ -16,8 +18,8 @@ public:
 	unionof(const B& b);
 	unionof(const unionof& u);
 	unionof(const A& a, const B& b);
-	void operator = (const A& a);
-	void operator = (const B& b);
+	void operator = (const A& x);
+	void operator = (const B& x);
 	void operator = (const unionof& u);
 	const A& first() const;
 	A& first();
@@ -43,34 +45,30 @@ unionof<A, B>::unionof(const unionof& u)
      b(u.b ? new B(b) : nullptr) {}
 
 template<typename A, typename B> 
-unionof<A, B>::unionof(const A& a, const B& b)
-   : a(a), b(b) {}
-
-template<typename A, typename B> 
-void unionof<A, B>::operator = (const A& a) {
-   if (*this -> a) delete *this -> a;
-   // if (*this.b) delete *this b;
-   *this -> a = new A(a);
+void unionof<A, B>::operator = (const A& x) {
+   if (a) delete a;
+   if (b) delete b;
+   a = new A(x);
 }
 
 template<typename A, typename B> 
-void unionof<A, B>::operator = (const B& b) {
-   // if (*this.a) delete *this.a;
-   if (*this -> b) delete *this -> b;
-   *this -> b = new A(b);
+void unionof<A, B>::operator = (const B& x) {
+   if (a) delete a;
+   if (b) delete b;
+   b = new B(x);
 }
 
 template<typename A, typename B> 
 void unionof<A, B>::operator = (const unionof& u) {
    if (a) delete a;
    if (b) delete b;
-   a = u.a ? new A(a) : nullptr;
-   b = u.b ? new B(b) : nullptr;
+   if (u.a) a = new A(u.a); 
+   else if (u.b) b = new B(u.b);
 }
 
 template<typename A, typename B> 
 const A& unionof<A, B>::first() const {
-   if (hasfirst()) return new A(a);
+   if (hasfirst()) return *a;
 }
 
 template<typename A, typename B> 
@@ -78,7 +76,7 @@ A& unionof<A, B>::first() { if (hasfirst()) return a; }
 
 template<typename A, typename B> 
 const B& unionof<A, B>::second() const {
-   if (hassecond()) return new B(b);
+   if (hassecond()) return *b;
 }
 
 template<typename A, typename B> 
@@ -96,8 +94,17 @@ unionof<A, B>::~unionof() {
    delete b;
 }
 
+std::ostream& operator << (std::ostream& stream, const std::vector<int> & v) {
+   for (unsigned int i = 0; i < v.size(); i++) {
+      stream << v[i] << " ";
+   }
+   return stream;
+}
+
 template<typename A, typename B> 
 std::ostream& operator << (std::ostream& stream, const unionof<A, B> & u) {
    if (u.hasfirst()) stream << u.first() << std::endl;
-   if (u.hassecond()) stream << u.second() << std::endl;
+   else if (u.hassecond()) stream << u.second() << std::endl;
+   return stream;
 }
+
