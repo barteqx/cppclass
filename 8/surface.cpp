@@ -32,15 +32,15 @@ double triangle::circumference() const {
 }
 
 rectangle* rectangle::clone() const {
-   return new rectangle(x1, y1, x2, y2);
+   return new rectangle(*this);
 }
 
 triangle* triangle::clone() const {
-   return new triangle(x1, y1, x2, y2, x3, y3);
+   return new triangle(*this);
 }
 
 circle* circle::clone() const {
-   return new circle(x, y, radius);
+   return new circle(*this);
 }
 
 void rectangle::print(std::ostream& stream) const {
@@ -78,7 +78,7 @@ std::ostream& operator << (std::ostream& stream, const surface& s) {
    return stream;
 }
 
-std::ostream& operator << (std::ostream& stream, const std::vector< surface > & table) {
+std::ostream& operator << (std::ostream& stream, const std::vector<surface> & table) {
    for (unsigned int i = 0; i < table.size(); i++) {
       stream << i << "-th element = " << table[i] << "\n";
    }
