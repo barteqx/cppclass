@@ -33,7 +33,7 @@ public:
 	~unionof();
 	friend std::ostream& operator << < > (std::ostream& stream, const unionof<A, B> &);
    friend std::ostream& operator << < > (std::ostream& stream, const std::vector<A> &);
-   friend std::ostream& operator << < > (std::ostream& stream, const std::vector<B> &);
+  	friend std::ostream& operator << < > (std::ostream& stream, const std::vector<B> &);
 };
 
 template<typename A, typename B> 
@@ -46,54 +46,55 @@ unionof<A, B>::unionof(const B& b)
 
 template<typename A, typename B> 
 unionof<A, B>::unionof(const unionof& u)
-   : a(u.a ? new A(a) : nullptr),
-     b(u.b ? new B(b) : nullptr) {}
+   : a(u.a ? new A(*u.a) : nullptr),
+     b(u.b ? new B(*u.b) : nullptr) {}
 
 template<typename A, typename B> 
 void unionof<A, B>::operator = (const A& x) {
-   if (a) delete a;
-   if (b) delete b;
+   delete a;
+   delete b;
    a = new A(x);
    b = nullptr;
 }
 
 template<typename A, typename B> 
 void unionof<A, B>::operator = (const B& x) {
-   if (a) delete a;
-   if (b) delete b;
+   delete a;
+   delete b;
    a = nullptr;
    b = new B(x);
 }
 
 template<typename A, typename B> 
 void unionof<A, B>::operator = (const unionof& u) {
-   if (a) delete a;
-   else if (b) delete b;
-   if (u.a) {
-      a = new A(u.a);
-      b = nullptr;
-   } 
-   else if(u.b) {
-      a = nullptr;
-      b = new B(u.b);
+   if (&u != this) {
+      delete a;
+      delete b;
+      if (u.a) {
+         a = new A(*u.a);
+         b = nullptr;
+      } else if(u.b) {
+         a = nullptr;
+         b = new B(*u.b);
+      }
    }
 }
 
 template<typename A, typename B> 
 const A& unionof<A, B>::first() const {
-   if (hasfirst()) return *a;
+    return *a;
 }
 
 template<typename A, typename B> 
-A& unionof<A, B>::first() { if (hasfirst()) return a; } 
+A& unionof<A, B>::first() { return a; } 
 
 template<typename A, typename B> 
 const B& unionof<A, B>::second() const {
-   if (hassecond()) return *b;
+   return *b;
 }
 
 template<typename A, typename B> 
-B& unionof<A, B>::second() { if (hassecond()) return b; }
+B& unionof<A, B>::second() { return b; }
 
 template<typename A, typename B> 
 bool unionof<A, B>::hasfirst() const { return a;}
