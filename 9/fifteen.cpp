@@ -37,7 +37,9 @@ fifteen solve(const fifteen& f) {
    }
 }
 
-fifteen::fifteen () {
+fifteen::fifteen () 
+  : x(3), y(3)
+  {
    for (int i = 0; i < 16; i++) {
       table[i/4][i%4] = (i+1) % 16;
    }
