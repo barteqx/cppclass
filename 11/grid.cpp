@@ -56,13 +56,10 @@ void grid::nextgeneration() {
 
    for (int i = 0; i < xsize; i++) {
       for (int j = 0; j < ysize; j++) {
-
          
          int count = 0;
          for (int n = 0; n < 8; n++) {
-            if(on_table(i+neighbours[n][0],j+neighbours[n][1])){
-               if ((*this)[i+neighbours[n][0]][j+neighbours[n][1]].s0) count++;
-            }
+            if ((*this)[(i+neighbours[n][0]) % xsize][(j+neighbours[n][1]) % ysize].s0) count++;
          }
 
          if (count < 2 && (*this)[i][j].s0) (*this)[i][j].s1 = false;
@@ -77,7 +74,6 @@ void grid::nextgeneration() {
    }
 }
 
-bool grid::on_table(int x, int y) { return (x >= 0 && x < xsize && y >= 0 && y < ysize); }
 
 std::ostream& operator << (std::ostream& stream, const grid& g) {
    for (int j = g.ysize - 1; j > 0; j--) {

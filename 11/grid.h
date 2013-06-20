@@ -53,6 +53,4 @@ public:
    void plot() const;
 
    friend std::ostream& operator << (std::ostream&, const grid&);
-
-   bool on_table(int x, int y);
 };

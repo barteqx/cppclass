@@ -6,8 +6,8 @@
 
 int main (int argc, char const* argv[])
 {
-   int gridSizeX = 100;
-   int gridSizeY = 100;
+   int gridSizeX = 500;
+   int gridSizeY = 500;
    std::default_random_engine generator;
    std::uniform_int_distribution<int> distribution(0,1);
    int dice_roll = distribution(generator);
@@ -32,8 +32,8 @@ int main (int argc, char const* argv[])
    glLoadIdentity( );
    glScalef( 1.0 / (gridSizeX/2), 1.0 / (gridSizeY/2), 1.0 );
 
-    bool running = true;
-   int frames = 0;
+   bool running = true;
+    int frames = 0;
     while (running) {
 
       sf::Event event;
@@ -52,8 +52,8 @@ int main (int argc, char const* argv[])
       life.plot();
       frames++;
       window.display();
-      system("clear");
-      std::cout << life;
+      // system("clear");
+      // std::cout << life;
     }
    return 0;
 }
