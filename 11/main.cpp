@@ -6,8 +6,8 @@
 
 int main (int argc, char const* argv[])
 {
-   int gridSizeX = 500;
-   int gridSizeY = 500;
+   int gridSizeX = 50;
+   int gridSizeY = 50;
    std::default_random_engine generator;
    std::uniform_int_distribution<int> distribution(0,1);
    int dice_roll = distribution(generator);
@@ -44,7 +44,7 @@ int main (int argc, char const* argv[])
          }
       }
 
-      if (frames >= 5) {
+      if (frames >= 1) {
          frames = 0;
          life.nextgeneration();
       }
@@ -52,8 +52,8 @@ int main (int argc, char const* argv[])
       life.plot();
       frames++;
       window.display();
-      // system("clear");
-      // std::cout << life;
+      system("clear");
+      std::cout << life;
     }
    return 0;
 }

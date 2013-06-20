@@ -14,17 +14,20 @@ grid::grid (const grid& g)
 
 
 void grid::operator = (const grid& g) {
-   delete[] c;
 
-   xsize = g.xsize;
-   ysize = g.ysize;
-   c = new cell[xsize*ysize];
+   if (this != &g) {
+      delete[] c;
 
-   for (int i = 0; i < ysize; i++) {
-      for (int j = 0; j < xsize; j++)
-      {
-         (*this)[i][j].s0 = g[i][j].s0;
-         (*this)[i][j].s1 = g[i][j].s1;
+      xsize = g.xsize;
+      ysize = g.ysize;
+      c = new cell[xsize*ysize];
+
+      for (int i = 0; i < ysize; i++) {
+         for (int j = 0; j < xsize; j++)
+         {
+            (*this)[i][j].s0 = g[i][j].s0;
+            (*this)[i][j].s1 = g[i][j].s1;
+         }
       }
    }
 }
@@ -32,8 +35,6 @@ void grid::operator = (const grid& g) {
 grid::~grid () { delete[] c; }
 
 void grid::clear () { 
-   delete[] c;
-   c = new cell[xsize*ysize];
    for (int i = 0; i < xsize; i++) {
       for (int j = 0; j < ysize; j++) {
          (*this)[i][j].s0 = false;
