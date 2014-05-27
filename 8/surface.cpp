@@ -71,7 +71,7 @@ void circle::print(std::ostream& stream) const {
    stream << ", circumference: " << circumference() << std::endl;
 }
 
-surf::~surf () {};
+surf::~surf () {}
 
 std::ostream& operator << (std::ostream& stream, const surface& s) {
    s.ref -> print(stream);
